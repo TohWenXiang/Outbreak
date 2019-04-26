@@ -251,10 +251,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 435436639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7add8c500db34d4da4c8d64a7c999bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e6db4b5b806e4241bca74f3fd7e2d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 8674481548036609784, guid: 3e2989f055104504a90e783670417b50,
+  characterPrefab: {fileID: 8038176594375318368, guid: bcb2ee49c6d4f7b44866e26e7d2cc587,
     type: 3}
 --- !u!1 &530261719
 GameObject:
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536896282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cf8bfa35ec492e4db0567625ed96c8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8549f2d51fc4759449e27206cb89d170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1726711632
@@ -635,7 +635,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86f73625d7f6775459a6e2643e918e3d, type: 2}
+  - {fileID: 2100000, guid: 13e062b94bacf00408e82df5c21a7b34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

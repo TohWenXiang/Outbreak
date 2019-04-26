@@ -7,11 +7,14 @@ namespace Outbreak
     [RequireComponent(typeof(CharacterController), typeof(CharacterInput))]
     public class Character : LivingEntity
     {
+        CharacterController theCharacterController;
+        CharacterInput theCharacterInput;
 
         protected override void Awake()
         {
             base.Awake();
-
+            theCharacterInput = GetComponent<CharacterInput>();
+            theCharacterController = GetComponent<CharacterController>();
         }
         // Start is called before the first frame update
         protected override void Start()
@@ -28,16 +31,16 @@ namespace Outbreak
         protected override void Die()
         {
             base.Die();
-            gameObject.GetComponent<CharacterInput>().enabled = false;
-            gameObject.GetComponent<CharacterController>().enabled = false;
+            theCharacterInput.enabled = false;
+            theCharacterController.enabled = false;
             StartCoroutine(DelayedRevival());
         }
 
         protected override void Revive()
         {
             base.Revive();
-            gameObject.GetComponent<CharacterInput>().enabled = true;
-            gameObject.GetComponent<CharacterController>().enabled = true;
+            theCharacterInput.enabled = true;
+            theCharacterController.enabled = true;
         }
     }
 }

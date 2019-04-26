@@ -13,7 +13,10 @@ namespace Outbreak
     {
         public Stats defaultStats;
         public event System.Action OnDeath;
-        
+
+        MeshRenderer theMeshRenderer;
+        CapsuleCollider theCapsuleCollider;
+        Rigidbody theRigidbody;
 
         protected Stats stats;
         public Stats Stats
@@ -27,6 +30,9 @@ namespace Outbreak
         protected virtual void Awake()
         {
             stats = new Stats(defaultStats);
+            theMeshRenderer = GetComponent<MeshRenderer>();
+            theCapsuleCollider = GetComponent<CapsuleCollider>();
+            theRigidbody = GetComponent<Rigidbody>();
         }
 
         // Start is called before the first frame update
@@ -43,8 +49,6 @@ namespace Outbreak
 
         public void TakeDamage(float damage)
         {
-            Debug.Log(defaultStats.IsDead);
-
             //if not dead
             if (stats.IsDead == false)
             {
@@ -60,8 +64,7 @@ namespace Outbreak
                     //pronouce it dead
                     Die();
                 }
-            }
-                        
+            }  
         }
 
         protected virtual void Die()
@@ -76,13 +79,13 @@ namespace Outbreak
             }
 
             //make player invisible
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            theMeshRenderer.enabled = false;
             //prevent any collision
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            theCapsuleCollider.enabled = false;
             //prevent player detecting collision
-            gameObject.GetComponent<Rigidbody>().detectCollisions = false;
+            theRigidbody.detectCollisions = false;
             //set to kinematic
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            theRigidbody.isKinematic = true;
         }
 
         protected IEnumerator DelayedRevival()
@@ -94,24 +97,20 @@ namespace Outbreak
 
         protected virtual void Revive()
         {
-            //2.  reset to default stats
+            //reset to default stats
             stats = new Stats(defaultStats);
-            //stats.IsDead = false;
-            //stats.Health = 3;
-            //stats.MovementSpeed = 10;
-            //stats = defaultStats;
 
             //1. set position to last respawn point location
             transform.position = Vector3.zero + (Vector3.up * 1.5f);
 
             //make player visible
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
-            //allow for collision
-            gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            theMeshRenderer.enabled = true;
+            //allow any collision
+            theCapsuleCollider.enabled = true;
             //allow player to detect collision
-            gameObject.GetComponent<Rigidbody>().detectCollisions = true;
+            theRigidbody.detectCollisions = true;
             //set to dynamic
-            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            theRigidbody.isKinematic = false;
         }
     }
 }
