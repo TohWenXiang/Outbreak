@@ -100,9 +100,6 @@ namespace Outbreak
             //reset to default stats
             stats = new Stats(defaultStats);
 
-            //1. set position to last respawn point location
-            transform.position = Vector3.zero + (Vector3.up * 1.5f);
-
             //make player visible
             theMeshRenderer.enabled = true;
             //allow any collision
