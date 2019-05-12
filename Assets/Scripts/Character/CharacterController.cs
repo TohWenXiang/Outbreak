@@ -4,35 +4,52 @@ using UnityEngine;
 
 namespace Outbreak
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(CharacterInput))]
     public class CharacterController : MonoBehaviour
     {
-        private Vector3 movementVelocity;
-        public Vector3 MovementVelocity
-        {
-            set
-            {
-                movementVelocity = value;
-            }
-        }
-
-        private Rigidbody playerRB;
+        Rigidbody characterRB;
+        Stats characterStats;
+        CharacterInput characterInput;
 
         void Awake()
         {
-            playerRB = GetComponent<Rigidbody>();
-            movementVelocity = Vector3.zero;
+            characterRB = GetComponent<Rigidbody>();
+            characterInput = GetComponent<CharacterInput>();
+        }
+
+        private void Start()
+        {
+            characterStats = GetComponent<Character>().Stats;
+        }
+
+        private void Update()
+        {
+            LookAt();
         }
 
         void FixedUpdate()
         {
-            playerRB.MovePosition(playerRB.position + (movementVelocity * Time.fixedDeltaTime));
+            Movement();
+        }
+        
+        void Movement()
+        {
+            Vector3 movementVelocity;
+            movementVelocity = characterInput.InputDir * characterStats.MovementSpeed;
+
+            Vector3 displacement;
+            displacement = movementVelocity * Time.fixedDeltaTime;
+
+            Vector3 newPosition;
+            newPosition = characterRB.position + displacement;
+
+            characterRB.MovePosition(newPosition);
         }
 
-        public void LookAtPoint(Vector3 point)
+        public void LookAt()
         {
             //make it look at the same height as player
-            Vector3 correctedLookAtPoint = new Vector3(point.x, transform.position.y, point.z);
+            Vector3 correctedLookAtPoint = new Vector3(characterInput.LookAtPoint.x, transform.position.y, characterInput.LookAtPoint.z);
 
             transform.LookAt(correctedLookAtPoint);
 

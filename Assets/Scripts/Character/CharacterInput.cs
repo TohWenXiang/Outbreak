@@ -4,25 +4,37 @@ using UnityEngine;
 
 namespace Outbreak
 {
-    [RequireComponent(typeof(Character), typeof(CharacterController))]
     public class CharacterInput : MonoBehaviour
     {
-        //passing it the calculated input
-        CharacterController playerController;
-        //accessing player stats
-        Stats playerStats;
+        Vector3 inputDir;
+        public Vector3 InputDir
+        {
+            get
+            {
+                return inputDir;
+            }
+        }
+
+        Vector3 lookAtPoint;
+        public Vector3 LookAtPoint
+        {
+            get
+            {
+                return lookAtPoint;
+            }
+        }
+
         //ray casting
         Camera playerView;
 
         private void Awake()
         {
-            playerController = GetComponent<CharacterController>();
             playerView = Camera.main;
         }
 
         void Start()
         {
-            playerStats = GetComponent<Character>().Stats;
+
         }
 
         void Update()
@@ -34,15 +46,10 @@ namespace Outbreak
 
         void MovementInput()
         {
-            /*
-             *      gather input here as a vector,
-             *      normalize it into a direction vector with a magnitude of one,
-             *      then calculate the velocity by multiplying input direction with the moving speed(magnitude)
-             *      and pass movement velocity to controller so that it can move the player
-             */
-            playerController.MovementVelocity = new Vector3(
+            //normalize the input dir so that it is moving in any direction equally
+            inputDir = new Vector3(
                 Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")
-                ).normalized * playerStats.MovementSpeed;
+                ).normalized;
         }
 
         void LookInput()
@@ -56,14 +63,13 @@ namespace Outbreak
             //stores ray distance when ray intersects the plane
             float rayDist;
 
-
             //check if ray intersects with ground
             if (ground.Raycast(ray, out rayDist))
             {
                 //get point of intersection using ray distance
                 Vector3 intersectPoint = ray.GetPoint(rayDist);
                 //Debug.DrawLine(ray.origin, intersectPoint, Color.red);
-                playerController.LookAtPoint(intersectPoint);
+                lookAtPoint = intersectPoint;
             }
         }
     }
