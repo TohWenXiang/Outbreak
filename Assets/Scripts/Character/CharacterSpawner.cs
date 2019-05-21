@@ -9,6 +9,7 @@ public class CharacterSpawner : MonoBehaviour
     void Start()
     {
         CharacterManager.Instance.CreateCharacter(transform.position - (Vector3.up * 1.5f));
+        transform.GetChild(1).parent = transform.parent;
         Destroy(gameObject);
     }
 
